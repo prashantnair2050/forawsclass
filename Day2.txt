@@ -1,0 +1,78 @@
+AWS Data Engineering ---- Day2
+Trainer: Prashant Nair
+===============================================================================================================================
+
+Agenda
+-------
+Data Acquisition in AWS
+Lab: AWS Kinesis Firehose
+Lab: AWS Kinesis Data Streams
+
+
+Data Acq
+
+
+File --------------------> Direct Upload From Web ---------------> S3
+
+Database ----------------> ? ------------------------------------> S3
+
+Streams -----------------> AWS Kinesis --------------------------> S3 
+
+
+
+Lab1: Grab Realtime Streams from the source machine using AWS kinesis and store the same in S3
+===============================================================================================
+
+
+EC2 
+Instance  ---------------------> AWS kinesis Firehose ----------------------> S3 bucket
+(Run a program
+that will generate
+stream data)
+
+
+Part1: Setup Data Stream Server that will emit realtime logs
+---------------------------------------------------------------
+
+1. Create an EC2 instance (t2.micro), provide admin role, and login the same via putty and WinSCP
+
+2. Install AWS kinesis firehose agent in the data source machine
+	
+sudo yum install -y aws-kinesis-agent
+
+3. Install a dummy program that can generate dummy logs.
+
+Download the same from GDrive and transfer using WinScP
+
+chmod a+x LogGenerator.py
+
+ls
+
+This programs generates realtime stream of logs and store the same in the folder /var/log/cadabra
+
+
+4. Create necessary folders
+
+sudo mkdir /var/log/cadabra
+
+
+Part2: Setup Kinesis Delivery Stream named CadabraOrders in Kinesis Firehose. This stream wwill get the data from Agent and store the same in S3
+-----------------------------------------------------------------------------------------------
+
+
+5. Create Kinesis Data Firehose Delivery Stream
+
+	a. On the search bar type "kinesis" and click on Kinesis
+	b. Click on/Select Kinesis Data Firehose > Create Delivery Stream
+	c. Select Source as Direct PUT and Destination as Amazon S3
+	d. Set the delivery stream name as "CadabraOrders"
+	e. Go to Destination Settings > Click on Create (to create a bucket). Once bucket is created go back to Kinesis tab and click on Browse > Select relevant bucket and click on Choose.
+	f. Once done scroll down and click on "Create delivery Stream"
+
+
+
+
+
+
+
+10 mins ------ Complete Point 1
